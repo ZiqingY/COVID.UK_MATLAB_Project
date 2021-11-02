@@ -1,4 +1,4 @@
-%% This file contains the codes for simulation function for the Alternative Policy
+%% This file contains codes for Alternative Policy simulation
 
 function yp = bsirSEIRHDassumptionset2(t,y,params);
 
