@@ -1,6 +1,8 @@
+%% This file makes the baseline simulation
+
+% set SEIHR model parameters
 set(groot,'defaultLineLineWidth',2.0);
 zeta = 1/30;
-%zeta = 10;
 gamma = 0.4;
 sigma = 0.425;
 eta = 0.025;
@@ -75,13 +77,17 @@ D1 = y1(:,8);
 Ddot1 = nu*zeta*(eta*gamma*(I1+Iv1) - zeta*H1);
 gD1 = Ddot1./(nu.*zeta.*H1);
 
+
+% To load the data for real UK death and set dates
 load ukdatanewnew.mat
 tdata = ukdatanewnew(:,1)-ukdatanewnew(1,1);
 t1date = datetime('15-Feb-2020')+t1;
 tdatadate = datetime('15-Feb-2020')+tdata;
 
+
+% Plot the results 
 figure(1)
-% plot death
+% Plot death
 subplot(2,1,1)
 plot(t1date,nu*zeta*H1*population,tdatadate,ukdatanewnew(:,4))
 line([37 37],[0 1500],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
@@ -91,7 +97,7 @@ line([291 291],[0 1500],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 line([324 324],[0 1500],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
 line([422 422],[0 1500],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 
-% plot fatigue
+% Plot fatigue
 subplot(2,1,2)
 tnew=transpose((1:570))
 knew = kappa*(1 -normcdf(tnew,fatiguemean,fatiguesig))+fatiguesize*kappa*normcdf(tnew,fatiguemean,fatiguesig);
@@ -105,5 +111,5 @@ line([324 324],[70000 150000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
 line([422 422],[70000 150000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 
 figure(2)
-% plot hospitalization
+% Plot hospitalization
 plot(t1date,nu*zeta*H1*population,tdatadate,ukdatanewnew(:,4))
