@@ -1,7 +1,7 @@
-% assumption set 4, perfectly match the data, indicating real population behaviors 
+%% This file makes the simulation for Alternative Policy
+
 set(groot,'defaultLineLineWidth',2.0);
 zeta = 1/30;
-%zeta = 10;
 gamma = 0.4;
 sigma = 0.425;
 eta = 0.025;
@@ -106,14 +106,8 @@ tdata = ukdatanewnew(:,1)-ukdatanewnew(1,1);
 t1date = datetime('15-Feb-2020')+t1;
 tdatadate = datetime('15-Feb-2020')+tdata;
 
-%subplot(2,2,1)
-%plot(t1date,D1*population,tdatadate,ukdatanewnew(:,3))
-%line([37 37],[0 250000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([129 129],[0 250000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-%line([259 259],[0 250000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([291 291],[0 250000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-%line([324 324],[0 250000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([422 422],[0 250000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
+
+% Plot simulated death and real death
 subplot(2,1,1)
 plot(t1date,nu*zeta*H1*population,tdatadate,ukdatanewnew(:,4))
 line([10 10],[0 1500],'linestyle', '--' , 'Color','m', 'LineWidth', 1)
@@ -125,23 +119,13 @@ line([291 291],[0 1500],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 line([324 324],[0 1500],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
 line([422 422],[0 1500],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 
-% plot fatigue
+
+
 t=transpose((1:365))
 tnew=transpose((1:570))
 
-%kt_1 = (1 + (fatiguesize1-1)*normcdf(t,fatiguemean1,fatiguesig1))*kappa1
-%kt_2 = (1 + (fatiguesize2-1)*normcdf(t,fatiguemean2,fatiguesig2))*kappa2
-%kt_3 = (1 + (fatiguesize3-1)*normcdf(t,fatiguemean3,fatiguesig3))*kappa3
-%k_t = (1 + (fatiguesize-1)*normcdf(t,fatiguemean,fatiguesig))*kappa
-%subplot(2,2,1)
-%plot(t,k_t, t,kt_1, t,kt_2, t,kt_3)
-%line([10 10],[70000 150000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([102 102],[70000 150000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-%line([209 209],[70000 150000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([291 291],[70000 150000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-%line([324 324],[70000 150000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([422 422],[70000 150000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 
+% Plot fatigue parameters under Alternative Policy and Actual Policy
 subplot(2,1,2)
 kappa10 = 1.300e+05;
 fatiguesize10 = 1.08;
@@ -166,13 +150,3 @@ line([259 259],[50000 150000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
 line([291 291],[50000 150000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 line([324 324],[50000 150000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
 line([422 422],[50000 150000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-
-%subplot(2,2,4)
-%psi = seasonalsize*(cos((t+seasonalposition)*2*pi/365)-1)/2;
-%plot(t, ktnew/100000, t, psi)
-%line([10 10],[-1.5 1.5],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([102 102],[-1.5 1.5],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-%line([209 209],[-1.5 1.5],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([291 291],[-1.5 1.5],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-%line([324 324],[-1.5 1.5],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([422 422],[-1.5 1.5],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
