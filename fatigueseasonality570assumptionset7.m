@@ -1,3 +1,5 @@
+%% Codes in this file are for evaluation of UK lockdowns
+
 t = transpose((1:365))
 tnew=transpose((1:570))
 
@@ -20,24 +22,24 @@ fatiguesize3 = 0.415;
 fatiguemean3 = 290;
 fatiguesig3 = 25;
 
+% construct the fatigue parameter
 knew = (1 + (fatiguesize1-1)*normcdf(tnew,fatiguemean1,fatiguesig1))*kappa1.*(tnew<=129) + (1 + (fatiguesize2-1)*normcdf(tnew,fatiguemean2,fatiguesig2))*kappa2.*(tnew>129 & tnew<=259) + (1 + (fatiguesize3-1)*normcdf(tnew,fatiguemean3,fatiguesig3))*kappa3.*(tnew>259)
 format long
-
 load t1H1forHtasp7.mat
 Ht = t1H1forHtasp7((1:570))
 kneweffect = -knew.*Ht*0.2/30
 t1datenew = datetime('15-Feb-2020')+tnew
 tdatadatenew = datetime('15-Feb-2020')+tnew
 
-
-% compare Ht and H1
+% convert the dimension of 'hospitalization' 
 figure(1)
 subplot(2,1,1)
 plot(t1datenew, Ht)
 subplot(2,1,2)
 plot(t1date, H1)
 
-% compare parameters
+
+% compare seasonality and fatigue parameters
 figure(2)
 subplot(2,2,1)
 plot(t1datenew, psi)
@@ -49,15 +51,6 @@ line([291 291],[-1.2 0.2],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 line([324 324],[-1.2 0.2],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
 line([422 422],[-1.2 0.2],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 
-%subplot(2,3,2)
-%plot(t1datenew, knew)
-%title('fatigue parameter')
-%line([37 37],[20000 160000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([129 129],[20000 160000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-%line([259 259],[20000 160000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([291 291],[20000 160000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-%line([324 324],[20000 160000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([422 422],[20000 160000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 
 subplot(2,2,2)
 plot(t1datenew, knew/100000-1.5, t1datenew, psi)
@@ -68,6 +61,7 @@ line([259 259],[-2 0.5],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
 line([291 291],[-2 0.5],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 line([324 324],[-2 0.5],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
 line([422 422],[-2 0.5],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
+
 
 subplot(2,2,3)
 plot(t1datenew, psi, t1datenew, kneweffect, t1datenew, psi + kneweffect)
@@ -80,6 +74,7 @@ line([324 324],[-2.5 0.5],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
 line([422 422],[-2.5 0.5],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 legend('psi', 'keffect', 'psi+keffect')
 legend('boxoff')
+
 
 subplot(2,2,4)
 beta570 = betabar*exp(-kappa*nu*zeta*Ht+psi)
@@ -95,11 +90,8 @@ line([422 422],[-2 1.5],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 legend('beta', 'k', 'psi')
 legend('boxoff')
 
-%seasonalsize = 1;
-%seasonalposition = 15
-%psi = seasonalsize*(cos((t+seasonalposition)*2*pi/365)-1)/2;
 
-% plot the simulation
+% plot the simulations for accumulated death and daily death
 figure(3)
 subplot(2,1,1)
 plot(t1date,D1*population,tdatadate,ukdatanewnew(:,3))
