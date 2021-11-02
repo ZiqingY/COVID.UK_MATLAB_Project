@@ -1,3 +1,5 @@
+%% This simulation function for Baseline Simulation file is referred from Atkeson (2021) 
+
 function yp = bsirSEIRHD(t,y);
 
 S = y(1);
