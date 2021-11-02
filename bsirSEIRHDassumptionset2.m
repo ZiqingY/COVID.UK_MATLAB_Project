@@ -1,4 +1,4 @@
-%% This file contains the codes for simulation function for the modified SEIHR model
+%% This file contains codes for modified SEIHR model simulation
 
 function yp = bsirSEIRHDassumptionset2(t,y,params);
 
