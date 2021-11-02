@@ -1,4 +1,4 @@
-%% This simulation function for Baseline Simulation file is referred from Atkeson (2021) 
+%% This simulation function file for Baseline Simulation is referred from Atkeson (2021) 
 
 function yp = bsirSEIRHD(t,y);
 
