@@ -1,7 +1,8 @@
-% assumption set 7, almost perfectly match the data, but estimate more deaths on 2nd peak, indicating fatigue almost constant during lockdown easing
+%% Simulation for Modified SEIHR model
+
+% Set model parameters
 set(groot,'defaultLineLineWidth',2.0);
 zeta = 1/30;
-%zeta = 10;
 gamma = 0.4;
 sigma = 0.425;
 eta = 0.025;
@@ -101,19 +102,14 @@ D1 = y1(:,8);
 Ddot1 = nu*zeta*(eta*gamma*(I1+Iv1) - zeta*H1);
 gD1 = Ddot1./(nu.*zeta.*H1);
 
+
+% Load data and set dates
 load ukdatanewnew.mat
 tdata = ukdatanewnew(:,1)-ukdatanewnew(1,1);
 t1date = datetime('15-Feb-2020')+t1;
 tdatadate = datetime('15-Feb-2020')+tdata;
 
-%subplot(2,2,1)
-%plot(t1date,D1*population,tdatadate,ukdatanewnew(:,3))
-%line([37 37],[0 250000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([129 129],[0 250000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-%line([259 259],[0 250000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([291 291],[0 250000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-%line([324 324],[0 250000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([422 422],[0 250000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
+% Plot simulation result
 figure(1)
 plot(t1date,nu*zeta*H1*population,tdatadate,ukdatanewnew(:,4))
 line([37 37],[0 1500],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
@@ -123,24 +119,14 @@ line([291 291],[0 1500],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 line([324 324],[0 1500],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
 line([422 422],[0 1500],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
 
-% plot fatigue
+
+% Plot fatigue
 t=transpose((1:365))
 tnew=transpose((1:570))
-
 kt_1 = (1 + (fatiguesize1-1)*normcdf(t,fatiguemean1,fatiguesig1))*kappa1
 kt_2 = (1 + (fatiguesize2-1)*normcdf(t,fatiguemean2,fatiguesig2))*kappa2
 kt_3 = (1 + (fatiguesize3-1)*normcdf(t,fatiguemean3,fatiguesig3))*kappa3
 k_t = (1 + (fatiguesize-1)*normcdf(t,fatiguemean,fatiguesig))*kappa
-
-%subplot(3,1,2)
-%plot(t,k_t, t,kt_1, t,kt_2, t,kt_3)
-%line([37 37],[70000 150000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([129 129],[70000 150000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-%line([259 259],[70000 150000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([291 291],[70000 150000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-%line([324 324],[70000 150000],'linestyle', '--' , 'Color','r', 'LineWidth', 1)
-%line([422 422],[70000 150000],'linestyle', '--' , 'Color','g', 'LineWidth', 1)
-
 figure(2)
 ktnew = (1 + (fatiguesize1-1)*normcdf(t,fatiguemean1,fatiguesig1))*kappa1.*(t<=129) + (1 + (fatiguesize2-1)*normcdf(t,fatiguemean2,fatiguesig2))*kappa2.*(t>129 & t<=259) + (1 + (fatiguesize3-1)*normcdf(t,fatiguemean3,fatiguesig3))*kappa3.*(t>259)
 plot(t,ktnew)
