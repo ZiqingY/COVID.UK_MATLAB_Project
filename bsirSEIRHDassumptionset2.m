@@ -1,3 +1,5 @@
+%% This file contains the codes for simulation function for the modified SEIHR model
+
 function yp = bsirSEIRHDassumptionset2(t,y,params);
 
 S = y(1);
